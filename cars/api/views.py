@@ -8,6 +8,15 @@ class CarViewSet(viewsets.ModelViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response({
+            "message": "Car created",
+            "data": serializer.data
+        }, status=status.HTTP_201_CREATED)
+
     def delete(self, request, *args, **kwargs):
         instance = self.get_object() #retrieves car instance i need to delete based on url parameters
         self.perform_destroy(instance)
@@ -33,6 +42,7 @@ class CarViewSet(viewsets.ModelViewSet):
             "message": "Car updated",
             "data": serializer.data
         })
+    
     
     @action(detail=True, methods=['patch'])
     def partial_update(self, request, *args, **kwargs):
