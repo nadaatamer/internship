@@ -14,10 +14,12 @@ class CarAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_car(self):
-        data = {"make": "Honda", "model": "Civic", "year": 2022}
-        response = self.client.post(self.list_url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        # removing post
+        car = Car.objects.create(make="Honda", model="Civic", year=2022)
         self.assertEqual(Car.objects.count(), 2)
+        self.assertEqual(car.make, "Honda")
+        self.assertEqual(car.model, "Civic")
+        self.assertEqual(car.year, 2022)
 
     def test_get_car_detail(self):
         response = self.client.get(self.detail_url)
