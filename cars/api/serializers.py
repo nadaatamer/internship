@@ -7,4 +7,4 @@ from cars.models import Car
 class CarSerializer(serializers.ModelSerializer):
     class Meta: #This inner class is used to specify metadata options for the CarSerializer.
         model = Car #specifying the model to be serialized
-        fields = '__all__' 
+        fields = ['id', 'name', 'model', 'year']
