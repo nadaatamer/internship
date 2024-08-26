@@ -1,3 +1,6 @@
+#python manage.py makemigrations
+#python manage.py migrate
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -19,16 +22,6 @@ class CarAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)#check if 2 variables are equal
         self.assertEqual(Car.objects.count(), 2)
         self.assertEqual(response.data['message'], "Car created successfully")
-        
-#update method is giving errors
-    # def test_update_car(self):
-    #     data = {
-    #         'brand': 'Updated Brand'
-    #     }
-    #     response = self.client.put(self.update_url, data, format='json')
-    #     self.car.refresh_from_db()
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(self.car.brand, 'Updated Brand')
 
     def test_delete_car(self):
         response = self.client.delete(self.detail_url)
@@ -44,3 +37,12 @@ class CarAPITestCase(APITestCase):
         self.assertEqual(response.data['cars'][0]['name'], 'Toyota')
         self.assertEqual(response.data['cars'][0]['model'], 'Corolla')
         self.assertEqual(response.data['cars'][0]['year'], 2020)
+
+    def test_update_car(self):
+        data = {'name': 'Honda', 'model': 'Civic', 'year': 2021}
+        response = self.client.put(self.detail_url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.car.refresh_from_db()
+        self.assertEqual(self.car.name, 'Honda')
+        self.assertEqual(self.car.model, 'Civic')
+        self.assertEqual(self.car.year, 2021)
