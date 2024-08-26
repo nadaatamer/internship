@@ -4,7 +4,7 @@ The Car Management System is a Django-based web application designed to manage a
 It provides a comprehensive solution for handling various aspects of car management, including car details.
 
 Features
-Car Management: Create, List, and Delete.
+Car Management: Create, List, Update and Deelete.
 REST API: Provides a RESTful API for interacting with the system programmatically.
 
 Installation
